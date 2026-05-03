@@ -1,0 +1,86 @@
+import { useState, useCallback, useMemo } from 'react';
+import type { Alert, RiskLevel } from '../types/patient';
+import { mockAlerts } from '../data/mockAlerts';
+
+interface UseTriageAlerts {
+  alerts: Alert[];
+  sortedAlerts: Alert[];         // sorted by triageScore descending
+  unacknowledgedAlerts: Alert[];
+  filteredAlerts: Alert[];
+  acknowledgeAlert: (id: string, by: string) => void;
+  acknowledgeAll: () => void;
+  filterByRisk: (risk: RiskLevel | 'all') => void;
+  activeFilter: RiskLevel | 'all';
+  criticalCount: number;
+  warningCount: number;
+  topTriage: Alert | null;       // single highest score unacked alert
+}
+
+export function useTriageAlerts(): UseTriageAlerts {
+  const [alerts, setAlerts] = useState<Alert[]>(mockAlerts);
+  const [activeFilter, setActiveFilter] = useState<RiskLevel | 'all'>('all');
+
+  const sortedAlerts = useMemo(
+    () => [...alerts].sort((a, b) => b.triageScore - a.triageScore),
+    [alerts]
+  );
+
+  const unacknowledgedAlerts = useMemo(
+    () => sortedAlerts.filter((a) => !a.acknowledged),
+    [sortedAlerts]
+  );
+
+  const filteredAlerts = useMemo(() => {
+    const base = sortedAlerts;
+    return activeFilter === 'all'
+      ? base
+      : base.filter((a) => a.riskLevel === activeFilter);
+  }, [sortedAlerts, activeFilter]);
+
+  const criticalCount = useMemo(
+    () => unacknowledgedAlerts.filter((a) => a.riskLevel === 'critical').length,
+    [unacknowledgedAlerts]
+  );
+
+  const warningCount = useMemo(
+    () => unacknowledgedAlerts.filter((a) => a.riskLevel === 'warning').length,
+    [unacknowledgedAlerts]
+  );
+
+  const topTriage = useMemo(
+    () => unacknowledgedAlerts[0] ?? null,
+    [unacknowledgedAlerts]
+  );
+
+  const acknowledgeAlert = useCallback((id: string, by: string) => {
+    setAlerts((prev) =>
+      prev.map((a) =>
+        a.id === id ? { ...a, acknowledged: true, acknowledgedBy: by } : a
+      )
+    );
+  }, []);
+
+  const acknowledgeAll = useCallback(() => {
+    setAlerts((prev) =>
+      prev.map((a) => ({ ...a, acknowledged: true, acknowledgedBy: 'Charge Nurse' }))
+    );
+  }, []);
+
+  const filterByRisk = useCallback((risk: RiskLevel | 'all') => {
+    setActiveFilter(risk);
+  }, []);
+
+  return {
+    alerts,
+    sortedAlerts,
+    unacknowledgedAlerts,
+    filteredAlerts,
+    acknowledgeAlert,
+    acknowledgeAll,
+    filterByRisk,
+    activeFilter,
+    criticalCount,
+    warningCount,
+    topTriage,
+  };
+}

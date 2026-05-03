@@ -1,0 +1,36 @@
+import clsx from 'clsx'
+import type { SurgicalWatchInfo } from '../hooks/useSurgicalWatch'
+
+interface Props { watchInfo: SurgicalWatchInfo; size?: 'sm' | 'md' }
+
+const cfg = {
+  high:    { bar: 'bg-hmg-red',   text: 'text-hmg-red',   bg: 'bg-hmg-red-l',   dot: 'bg-hmg-red',   label: 'High watch' },
+  medium:  { bar: 'bg-amber-500', text: 'text-amber-600', bg: 'bg-amber-50',    dot: 'bg-amber-500', label: 'Active watch' },
+  low:     { bar: 'bg-blue-400',  text: 'text-blue-600',  bg: 'bg-blue-50',     dot: 'bg-blue-400',  label: 'Winding down' },
+  cleared: { bar: 'bg-green-500', text: 'text-green-700', bg: 'bg-green-50',    dot: 'bg-green-500', label: 'Cleared' },
+}
+
+function fmt(m: number) {
+  const h = Math.floor(m / 60), min = m % 60
+  return h > 0 ? `${h}h ${min}m` : `${min}m`
+}
+
+export function PostOpCountdown({ watchInfo, size = 'sm' }: Props) {
+  const c = cfg[watchInfo.urgency]
+  return (
+    <div className={clsx('rounded px-2 py-1.5', c.bg)}>
+      <div className="flex items-center justify-between mb-1">
+        <div className="flex items-center gap-1.5">
+          <span className={clsx('w-1.5 h-1.5 rounded-full shrink-0', c.dot, watchInfo.urgency === 'high' && 'risk-pulse')} />
+          <span className={clsx('text-2xs font-500', c.text)}>Post-op · {c.label}</span>
+        </div>
+        <span className={clsx('font-mono text-2xs font-500', c.text)}>
+          {watchInfo.inCriticalWindow ? `${fmt(watchInfo.minutesRemaining)} left` : 'Cleared'}
+        </span>
+      </div>
+      <div className="h-1 bg-white rounded-full overflow-hidden">
+        <div className={clsx('h-full rounded-full bar-animate', c.bar)} style={{ width: `${watchInfo.percentElapsed}%` }} />
+      </div>
+    </div>
+  )
+}

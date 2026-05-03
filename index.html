@@ -1,0 +1,20 @@
+import { Routes, Route, Navigate } from 'react-router-dom'
+import { DashboardLayout } from './components/DashboardLayout'
+import { Dashboard } from './pages/Dashboard'
+import { Alerts } from './pages/Alerts'
+import { Handover } from './pages/Handover'
+import { PatientDetail } from './pages/PatientDetail'
+
+export default function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<DashboardLayout />}>
+        <Route index element={<Navigate to="/dashboard" replace />} />
+        <Route path="dashboard" element={<Dashboard />} />
+        <Route path="alerts" element={<Alerts />} />
+        <Route path="handover" element={<Handover />} />
+        <Route path="patient/:id" element={<PatientDetail />} />
+      </Route>
+    </Routes>
+  )
+}
