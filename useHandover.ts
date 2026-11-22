@@ -34,7 +34,7 @@ export interface Patient {
   age: number;
   room: string;
   ward: string;
-  branch: string; // HMG branch e.g. "HMG Riyadh"
+  branch: string; // hospital site, e.g. "Riyadh (demo)"
   condition: string;
   riskLevel: RiskLevel;
   alertScore: number;  // 0–100 composite triage score

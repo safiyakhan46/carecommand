@@ -20,13 +20,13 @@ export function DashboardLayout() {
         {/* Logo */}
         <div className="px-4 py-4 border-b border-ink-5">
           <div className="flex items-center gap-2.5">
-            {/* Al Habib-style red square logo mark */}
+            {/* CareCommand logo mark */}
             <div className="w-8 h-8 bg-hmg-red rounded flex items-center justify-center shrink-0">
-              <span className="text-white font-bold text-xs tracking-tight">HMG</span>
+              <span className="text-white font-bold text-xs tracking-tight">CC</span>
             </div>
             <div>
               <p className="text-[11px] font-600 text-ink leading-none">CareCommand</p>
-              <p className="text-[10px] text-ink-3 mt-0.5">Sulaiman Al Habib</p>
+              <p className="text-[10px] text-ink-3 mt-0.5">Concept demo</p>
             </div>
           </div>
         </div>

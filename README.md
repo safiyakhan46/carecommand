@@ -1,5 +1,7 @@
 # 🏥 CareCommand — Fatigue-Aware Patient Handover Dashboard
 
+> **Independent concept project.** Inspired by handover workflows at large private hospital groups in Saudi Arabia. Not affiliated with, endorsed by or built for any hospital or hospital group. All patient data is synthetic.
+
 ## 📌 Overview
 
 CareCommand is a patient dashboard designed to reduce **cognitive overload and fatigue during clinical handovers**.
@@ -70,7 +72,7 @@ A dashboard that:
 * **Frontend:** React + TypeScript
 * **Build Tool:** Vite
 * **Styling:** Tailwind CSS
-* **Data:** Mock data (simulating real clinical scenarios)
+* **Data:** Synthetic mock patients (no real patient data)
 
 ---
 
@@ -105,7 +107,7 @@ src/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/carecommand.git
+git clone https://github.com/safiyakhan46/carecommand.git
 cd carecommand
 ```
 
@@ -166,9 +168,6 @@ Every feature aims to reduce:
 
 ---
 
-
----
-
 ## 🤝 Contributing
 
 This is currently a personal project, but suggestions and feedback are always welcome.
@@ -183,4 +182,6 @@ MIT License
 
 ## ✨ Author
 
-Built as part of a project exploring **health tech, human-centered design, and decision support systems**.
+**Safiya Salman Khan**, built as a personal project exploring health tech, human-centered design and clinical decision support.
+
+[Portfolio](https://safiyakhan.netlify.app) · [LinkedIn](https://www.linkedin.com/in/safiya-salman-khan-573153325/)
